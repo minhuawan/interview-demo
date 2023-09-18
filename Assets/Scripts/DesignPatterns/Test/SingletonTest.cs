@@ -3,9 +3,9 @@ using DesignPatterns.Singleton;
 
 namespace DesignPatterns.Test
 {
-    public class SingletonTest
+    public class SingletonTest : ITestRunner
     {
-        private static void Start()
+        public void Run(object args)
         {
             Debug.Log("TestSingletonClass.Instance.message: " + TestSingletonClass.Instance.message);
         }

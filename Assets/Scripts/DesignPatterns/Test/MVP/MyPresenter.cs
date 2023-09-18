@@ -37,10 +37,10 @@ namespace DesignPatterns.Test.MVP
         private void OnButtonClicked()
         {
             clickedTimes++;
-            string msg = $"You clicked the Button {clickedTimes} times" +
-                         $"\nClick it over 5 times to disappear the view";
+            string msg = $"\nClicked  {clickedTimes} times" +
+                         $"\nOver 5 times. view will disappear";
             myView.SetTitle(msg);
-            if (clickedTimes == 5)
+            if (clickedTimes == 6)
             {
                 Disappear();
                 Dispose();

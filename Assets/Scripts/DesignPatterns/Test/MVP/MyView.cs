@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace DesignPatterns.Test.MVP
 {
     [ViewPath("View/MyView")]
-    public class MyView : View
+    public class MyView : AnimationView
     {
         [SerializeField] private Text title;
         [SerializeField] private Button button;

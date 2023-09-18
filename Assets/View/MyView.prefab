@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Click Me
+  m_Text: 'Click Me '
 --- !u!1 &9209579186074777381
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9209579186196020390}
   - component: {fileID: 9209579186196020391}
-  - component: {fileID: 1229140971899263095}
+  - component: {fileID: -2201844033756899692}
   m_Layer: 0
   m_Name: MyView
   m_TagString: Untagged
@@ -206,21 +206,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: {fileID: 9209579186074777371}
   button: {fileID: 9209579186730886142}
---- !u!111 &1229140971899263095
-Animation:
+--- !u!95 &-2201844033756899692
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9209579186196020385}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 3fda3bac41d16cb4b9a2762e3fa31259, type: 2}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 36f4a04edd8360e4395f136138b425fd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9209579186249288309
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,7 +569,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9209579187422153268}
   - component: {fileID: 9209579187422153270}
-  - component: {fileID: 9209579187422153271}
   m_Layer: 0
   m_Name: CanvasCamera
   m_TagString: Untagged
@@ -630,11 +633,3 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &9209579187422153271
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9209579187422153265}
-  m_Enabled: 1

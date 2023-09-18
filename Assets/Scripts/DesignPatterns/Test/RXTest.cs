@@ -6,9 +6,9 @@ using Object = UnityEngine.Object;
 
 namespace DesignPatterns.Test
 {
-    public class RXTest
+    public class RXTest : ITestRunner
     {
-        public static void Run()
+        public void Run(object args)
         {
             RXTestClass.RXTestPresenter presenter = new RXTestClass.RXTestPresenter();
             presenter.Initialize();

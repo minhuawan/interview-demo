@@ -18,14 +18,20 @@ namespace DesignPatterns.MVP.ViewLoader
             }
             else
             {
-                string guid = AssetDatabase.AssetPathToGUID(path);
+                string fullPath = System.IO.Path.Combine("Assets", path);
+                if (!fullPath.EndsWith(".preafb"))
+                {
+                    fullPath += ".prefab";
+                }
+
+                string guid = AssetDatabase.AssetPathToGUID(fullPath);
                 if (string.IsNullOrEmpty(guid))
                 {
                     OnLoadError($"View path not found in asset path, path: {path}");
                 }
                 else
                 {
-                    T asset = AssetDatabase.LoadAssetAtPath<T>(path);
+                    T asset = AssetDatabase.LoadAssetAtPath<T>(fullPath);
                     if (asset == null)
                     {
                         OnLoadError($"Asset is null object, path: {path}");
