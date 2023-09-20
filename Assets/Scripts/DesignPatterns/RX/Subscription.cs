@@ -8,6 +8,7 @@ namespace DesignPatterns.RX
 
         protected Subject<T> subject;
         protected function func;
+        private bool disposed;
 
         public Subscription(Subject<T> subject, function func)
         {
@@ -17,11 +18,19 @@ namespace DesignPatterns.RX
 
         public void OnNext(T t)
         {
+            if (disposed)
+            {
+                throw new ObjectDisposedException(nameof(Subscription<T>));
+            }
+
             func(t);
         }
 
         public void Dispose()
         {
+            if (disposed)
+                return;
+            disposed = true;
             if (subject != null)
             {
                 subject.Unsubscribe(this);

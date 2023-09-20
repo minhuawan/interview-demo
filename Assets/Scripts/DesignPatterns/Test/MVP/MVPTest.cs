@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using DesignPatterns.MVP.Management;
 
 namespace DesignPatterns.Test.MVP
 {
@@ -6,8 +8,12 @@ namespace DesignPatterns.Test.MVP
     {
         public void Run(object args)
         {
-            MyPresenter presenter = new MyPresenter();
-            presenter.Initialize();
+            NavigateData navigateData = new NavigateData(new Dictionary<string, object>()
+            {
+                [MyPresenter.Content] = "Click button to create another view",
+                [MyPresenter.ClickToClose] = true,
+            });
+            UIManager.Instance.Navigate<MyPresenter>(navigateData);
         }
     }
 }

@@ -14,10 +14,11 @@ namespace DesignPatterns.Test.MVP
         [SerializeField] private Button button;
         private Subject<RXVoid> clickSubject = new Subject<RXVoid>();
 
-        public Subject<RXVoid> ClickEvent => clickSubject;
+        public ISubject<RXVoid> ClickEvent => clickSubject;
 
         public override void Appear(Action action)
         {
+            disposables.Add(clickSubject);
             button.onClick.AddListener(() => clickSubject.OnNext(RXVoid.Void));
             base.Appear(action);
         }
@@ -25,6 +26,11 @@ namespace DesignPatterns.Test.MVP
         public void SetTitle(string titleMsg)
         {
             title.text = titleMsg;
+        }
+
+        public void SetButtonActive(bool active)
+        {
+            button.gameObject.SetActive(active);
         }
     }
 }

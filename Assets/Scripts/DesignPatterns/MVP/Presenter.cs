@@ -1,15 +1,19 @@
 ﻿using DesignPatterns.Extension;
+using DesignPatterns.MVP.Management;
 using UnityEngine;
 
 namespace DesignPatterns.MVP
 {
     public abstract class Presenter : DisposableContainer
     {
-        public abstract View view { get; }
+        protected abstract View view { get; }
+
+        protected NavigateData navigateData;
 
 
-        public virtual void Initialize()
+        public virtual void Initialize(NavigateData navigateData)
         {
+            this.navigateData = navigateData;
         }
 
         public abstract void OnViewLoaded(View loadedView);
@@ -19,23 +23,32 @@ namespace DesignPatterns.MVP
             view.Appear(OnDidAppear);
         }
 
-        protected abstract void OnDidAppear();
+        protected virtual void OnDidAppear()
+        {
+        }
 
         public virtual void Disappear()
         {
             view.Disappear(OnDidDisappear);
         }
 
-        protected abstract void OnDidDisappear();
+        protected virtual void OnDidDisappear()
+        {
+            Dispose();
+        }
 
         public override void Dispose()
         {
+            if (disposed)
+                return;
+
+
             if (view != null)
             {
                 view.Dispose();
             }
 
-            base.Dispose();
+            base.Dispose(); // dispose container
         }
     }
 }

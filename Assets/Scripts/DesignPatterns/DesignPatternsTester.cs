@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DesignPatterns.MVP.Management;
 using DesignPatterns.Test;
 using DesignPatterns.Test.MVP;
 using UnityEngine;
@@ -31,6 +32,8 @@ namespace DesignPatterns
 
         private void Start()
         {
+            UIManager.Instance.Initialize();
+
             if (testRunners.TryGetValue(target, out ITestRunner runner))
             {
                 runner.Run(null);

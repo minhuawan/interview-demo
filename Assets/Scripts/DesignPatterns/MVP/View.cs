@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using DesignPatterns.Extension;
 using DesignPatterns.MVP.ViewLoader;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace DesignPatterns.MVP
 {
@@ -9,10 +11,14 @@ namespace DesignPatterns.MVP
     {
         private static readonly IViewLoader viewLoader = new EditorViewLoader();
 
+
         public static void LoadView<T>(Presenter presenter) where T : View
         {
             viewLoader.LoadView<T>(view => { presenter.OnViewLoaded(view); });
         }
+
+        protected bool disposed;
+        protected List<IDisposable> disposables = new List<IDisposable>();
 
 
         public virtual void Appear(Action action)
@@ -29,6 +35,16 @@ namespace DesignPatterns.MVP
 
         public void Dispose()
         {
+            if (disposed)
+                return;
+            disposed = true;
+            for (var i = 0; i < disposables.Count; i++)
+            {
+                disposables[i].Dispose();
+            }
+
+            disposables.Clear();
+            UnityEngine.GameObject.Destroy(this);
         }
     }
 
@@ -54,6 +70,7 @@ namespace DesignPatterns.MVP
         }
     }
 
+    // todo: Pool it ?
     public class AnimationEventAttach : MonoBehaviour
     {
         public static void Play(Animator animator, string animationName, Action callback)
@@ -62,8 +79,7 @@ namespace DesignPatterns.MVP
             eventAttach.Initialize(animator, animationName, callback);
         }
 
-        [Header("Those value make from runtime, do not edit it")]
-        [SerializeField] private string cachedAnimationName;
+        [Header("Those value make from runtime, do not edit it")] [SerializeField] private string cachedAnimationName;
         [SerializeField] private bool isEventAdded;
         [SerializeField] private Animator cachedAnimator;
         private Action cachedCallback;
@@ -84,7 +100,11 @@ namespace DesignPatterns.MVP
             if (isEventAdded)
                 return;
             isEventAdded = true;
-            AnimationClip clip = cachedAnimator.runtimeAnimatorController.animationClips[0];
+
+            // todo There need to check
+            // Is there need create 2 animators for 2 animations ?
+            AnimationClip clip = cachedAnimator.runtimeAnimatorController.animationClips.FirstOrDefault(c => c.name == cachedAnimationName);
+            Debug.Assert(clip, "clip");
             clip.AddEvent(new AnimationEvent()
             {
                 time = clip.length,
@@ -103,7 +123,7 @@ namespace DesignPatterns.MVP
             }
 
             Destroy(this);
-            Debug.Log($"Destroy {cachedAnimationName}");
+            // Debug.Log($"Destroy {cachedAnimationName}");
         }
     }
 }
