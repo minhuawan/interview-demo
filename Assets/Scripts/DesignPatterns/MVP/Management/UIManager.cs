@@ -32,8 +32,9 @@ namespace DesignPatterns.MVP.Management
     public class UIManager : Singleton<UIManager>
     {
         private List<Presenter> history = new List<Presenter>();
-        private Presenter current = null;
         private KeyboardListener escapeListener;
+        private Presenter current;
+        private bool isDisappearing = false;
 
 
         private bool initialized;
@@ -46,8 +47,9 @@ namespace DesignPatterns.MVP.Management
 
             escapeListener = KeyboardListener.Create(nameof(UIManager));
             escapeListener.TargetKeyCode = KeyCode.Escape;
-            escapeListener.KeyboardEvent.Subscribe(_ => Back());
+            escapeListener.KeyboardEvent.Subscribe(OnKeyboardEvent);
         }
+
 
         public void Navigate<T>(NavigateData data) where T : Presenter, new()
         {
@@ -57,14 +59,38 @@ namespace DesignPatterns.MVP.Management
             current = presenter;
         }
 
+        private void OnKeyboardEvent(KeyboardListener.EventType eventType)
+        {
+            if (current != null && eventType == KeyboardListener.EventType.Up)
+            {
+                current.HandleEscapeClose();
+            }
+        }
+
         public void Back()
         {
-            if (history.Count == 0)
+            StartDisappearPresenter();
+        }
+
+        private void StartDisappearPresenter()
+        {
+            if (current == null || history.Count == 0 || isDisappearing)
                 return;
-            int index = history.Count - 1;
-            Presenter presenter = history[index];
-            presenter.Disappear();
-            history.RemoveAt(index);
+            current.Disappear();
+            isDisappearing = true;
+        }
+
+        public void MarkPresenterDidDisappear(Presenter presenter)
+        {
+            Debug.Assert(presenter == current);
+            history.RemoveAt(history.Count - 1);
+            current = null;
+            if (history.Count > 0)
+            {
+                current = history[history.Count - 1];
+            }
+
+            isDisappearing = false;
         }
     }
 }
