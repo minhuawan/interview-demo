@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using DesignPatterns.Extension;
 using DesignPatterns.MVP;
 using DesignPatterns.MVP.Management;
 
@@ -10,6 +9,14 @@ namespace DesignPatterns.Test.MVP
         public static string Content = "ContentKey";
         public static string ClickToClose = "ClickToClose";
         public static string EscapeToClose = "EscapeToClose";
+
+        public override void HandleEscapeClose()
+        {
+            if (navigateData.HasData(EscapeToClose))
+            {
+                base.HandleEscapeClose();   
+            }
+        }
 
         private int clickedTimes = 0;
 
@@ -42,11 +49,10 @@ namespace DesignPatterns.Test.MVP
                 }
                 else
                 {
-                    clickedTimes++;
                     string msg = $"\nClicked  {clickedTimes} times" +
                                  $"\nOver 5 times. view will disappear";
                     myView.SetTitle(msg);
-                    if (clickedTimes == 6)
+                    if (clickedTimes >= 6)
                     {
                         Disappear();
                         Dispose();
@@ -59,7 +65,7 @@ namespace DesignPatterns.Test.MVP
         {
             NavigateData newData = new NavigateData(new Dictionary<string, object>()
             {
-                [MyPresenter.Content] = "Type `Esc` to close",
+                [Content] = "Type `Esc` to close",
             });
             UIManager.Instance.Navigate<MyPresenter>(newData);
         }

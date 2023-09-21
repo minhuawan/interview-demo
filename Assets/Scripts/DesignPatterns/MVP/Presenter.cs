@@ -34,6 +34,7 @@ namespace DesignPatterns.MVP
 
         protected virtual void OnDidDisappear()
         {
+            UIManager.Instance.MarkPresenterDidDisappear(this);
             Dispose();
         }
 
@@ -42,6 +43,7 @@ namespace DesignPatterns.MVP
             if (disposed)
                 return;
 
+            Debug.Log($"{GetType().FullName} Disposed");
 
             if (view != null)
             {
@@ -49,6 +51,11 @@ namespace DesignPatterns.MVP
             }
 
             base.Dispose(); // dispose container
+        }
+
+        public virtual void HandleEscapeClose()
+        {
+            UIManager.Instance.Back();
         }
     }
 }

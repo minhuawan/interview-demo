@@ -39,7 +39,7 @@ namespace DesignPatterns.RX
             if (disposed)
                 return;
 
-            for (var i = 0; i < subscriptions.Count; i++)
+            for (int i = 0; i < subscriptions.Count; i++)
             {
                 if (disposed)
                 {
@@ -59,7 +59,7 @@ namespace DesignPatterns.RX
             }
 
             disposed = true;
-            for (var i = 0; i < subscriptions.Count; i++)
+            for (int i = 0; i < subscriptions.Count; i++)
             {
                 subscriptions[i].Dispose();
             }
