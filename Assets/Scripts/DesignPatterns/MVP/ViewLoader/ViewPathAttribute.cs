@@ -14,7 +14,7 @@ namespace DesignPatterns.MVP.ViewLoader
 
         public static string GetPath<T>() where T : View
         {
-            ViewPathAttribute attribute = typeof(T).GetCustomAttribute<ViewPathAttribute>();
+            ViewPathAttribute attribute = typeof(T).GetCustomAttribute<ViewPathAttribute>(true);
             if (attribute == null)
             {
                 return null;

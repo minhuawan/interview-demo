@@ -1,5 +1,6 @@
 ﻿using System;
 using DesignPatterns.MVP;
+using DesignPatterns.MVP.Animation;
 using DesignPatterns.MVP.ViewLoader;
 using DesignPatterns.RX;
 using UnityEngine;
