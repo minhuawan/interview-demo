@@ -66,6 +66,7 @@ namespace DesignPatterns.Test.MVP
             NavigateData newData = new NavigateData(new Dictionary<string, object>()
             {
                 [Content] = "Type `Esc` to close",
+                [EscapeToClose] = true,
             });
             UIManager.Instance.Navigate<MyPresenter>(newData);
         }
